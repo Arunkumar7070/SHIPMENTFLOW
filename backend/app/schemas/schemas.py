@@ -37,3 +37,44 @@ class UserOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+# ── Driver ────────────────────────────────────────────────────────────────────
+
+class DriverCreate(BaseModel):
+    license_number: Optional[str] = None
+    vehicle_type: Optional[str] = None
+    vehicle_plate: Optional[str] = None
+
+
+class DriverLocationUpdate(BaseModel):
+    lat: float = Field(..., ge=-90, le=90)
+    lng: float = Field(..., ge=-180, le=180)
+
+
+class DriverOut(BaseModel):
+    id: UUID
+    user_id: UUID
+    license_number: Optional[str]
+    vehicle_type: Optional[str]
+    vehicle_plate: Optional[str]
+    current_lat: Optional[float]
+    current_lng: Optional[float]
+    is_available: bool
+    last_location_update: Optional[datetime]
+    user: UserOut
+
+    class Config:
+        from_attributes = True
+
+
+# ── Address ───────────────────────────────────────────────────────────────────
+
+class Address(BaseModel):
+    street: str
+    city: str
+    state: str
+    postal_code: str
+    country: str = "India"
+    lat: Optional[float] = None
+    lng: Optional[float] = None
